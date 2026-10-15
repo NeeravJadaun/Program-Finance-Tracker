@@ -110,7 +110,7 @@ def test_ui_reset_and_empty_state(db_file, frames):
     assert any("No programs selected" in i.value for i in at.info)
     assert not at.metric  # no KPI cards without a scope
 
-    next(b for b in at.button if b.label == "Reset filters").click().run()
+    at.button(key="empty_reset").click().run()  # the in-page reset offered by the empty state
     assert not at.exception
     assert at.multiselect(key="f_programs").value == ["P01", "P02", "P03", "P04"]
     budget = {m.label: m.value for m in at.metric}["Budget"]

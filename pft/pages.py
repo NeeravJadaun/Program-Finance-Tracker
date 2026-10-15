@@ -32,7 +32,7 @@ class Ctx:
 
 
 def _empty_state(message: str) -> None:
-    st.info(message + " Adjust the filters in the sidebar or use Reset filters.", icon=":material/filter_alt_off:")
+    ui.empty_state(message)
 
 
 def _flash() -> None:
@@ -123,11 +123,30 @@ def overview(ctx: Ctx) -> None:
              "Reconciliation exceptions with status Open or Under review.",
              f"{high} high severity")
 
-    left, right = st.columns([2, 1], gap="medium")
+    left, right = st.container(key="ov_row").columns([2, 1], gap="medium")
     with left, st.container(border=True, key="card_chart"):
         ui.heading("Monthly budget vs actual",
                    "Bars: actual spend (CAD). Dashed line: monthly budget. Red labels mark overspend months with variance %, N/A where the budget is zero. Panels share one scale.")
         _bva_charts(ctx)
+        with st.expander("Chart data as a table"):
+            st.caption("The same figures as the chart, by program and month, for keyboard and screen-reader access.")
+            d = r.bva.copy()
+            d["month"] = d["month"].map(month_name)
+            d["variance_pct_text"] = d["variance_pct"].map(fmt_pct)
+            d = ui.cents_to_dollars(d, ["budget_cents", "actual_cents", "variance_cents", "remaining_cents"])
+            st.dataframe(
+                d[["program", "month", "budget_cents", "actual_cents", "variance_cents", "variance_pct_text",
+                   "remaining_cents", "txn_count"]],
+                hide_index=True, width="stretch",
+                column_config={
+                    "program": "Program", "month": "Month",
+                    "budget_cents": ui.money("Budget (CAD)"), "actual_cents": ui.money("Actual (CAD)"),
+                    "variance_cents": ui.money("Variance (CAD)"),
+                    "variance_pct_text": ui.right_text("Variance %"),
+                    "remaining_cents": ui.money("Remaining (CAD)"),
+                    "txn_count": st.column_config.NumberColumn("Expenses", alignment="right"),
+                },
+            )
     with right, st.container(border=True, key="card_findings"):
         ui.heading("Findings", "Calculated from the filtered data.")
         items = "".join(f"<li>{html.escape(f)}</li>" for f in r.findings)
@@ -156,24 +175,6 @@ def overview(ctx: Ctx) -> None:
                 "status": st.column_config.TextColumn("Status"),
             },
         )
-        with st.expander("Program-month detail"):
-            d = r.bva.copy()
-            d["month"] = d["month"].map(month_name)
-            d["variance_pct_text"] = d["variance_pct"].map(fmt_pct)
-            d = ui.cents_to_dollars(d, ["budget_cents", "actual_cents", "variance_cents", "remaining_cents"])
-            st.dataframe(
-                d[["program", "month", "budget_cents", "actual_cents", "variance_cents", "variance_pct_text",
-                   "remaining_cents", "txn_count"]],
-                hide_index=True, width="stretch",
-                column_config={
-                    "program": "Program", "month": "Month",
-                    "budget_cents": ui.money("Budget (CAD)"), "actual_cents": ui.money("Actual (CAD)"),
-                    "variance_cents": ui.money("Variance (CAD)"),
-                    "variance_pct_text": ui.right_text("Variance %"),
-                    "remaining_cents": ui.money("Remaining (CAD)"),
-                    "txn_count": st.column_config.NumberColumn("Expenses", alignment="right"),
-                },
-            )
 
 
 # --------------------------------------------------------------------------- Reconciliation

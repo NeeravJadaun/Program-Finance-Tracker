@@ -50,7 +50,22 @@ div.stVerticalBlock[class*="st-key-card"] {{
 .pft-title {{ font-size: 1.6rem; font-weight: 700; color: {TEXT}; margin: 0; line-height: 1.2; }}
 .pft-sub {{ color: {MUTED}; margin: .35rem 0 0 0; font-size: .95rem; }}
 .pft-badge {{ display: inline-block; padding: .15rem .55rem; border-radius: 999px; font-size: .8rem;
-  font-weight: 600; line-height: 1.4; vertical-align: middle; border: 1px solid transparent; }}
+  font-weight: 600; line-height: 1.4; vertical-align: middle; border: 1px solid transparent;
+  white-space: nowrap; }}
+/* Captions: solid muted colour instead of Streamlit's 60% opacity (keeps contrast above 4.5:1). */
+[data-testid="stCaptionContainer"] {{ opacity: 1; color: {MUTED}; }}
+[data-testid="stCaptionContainer"] p {{ color: {MUTED}; }}
+/* Visible keyboard focus on every interactive control: solid teal is 5.4:1 on white,
+   where Streamlit's default 50% ring is about 2:1. */
+button:focus-visible, a:focus-visible, [role="button"]:focus-visible, [role="tab"]:focus-visible,
+input:focus-visible, textarea:focus-visible, [role="slider"]:focus-visible {{
+  outline: 2px solid {TEAL} !important; outline-offset: 2px !important;
+}}
+button, a, [role="button"], [data-testid="stExpander"] summary {{ cursor: pointer; }}
+@media (prefers-reduced-motion: reduce) {{
+  *, *::before, *::after {{ transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important; }}
+}}
 .pft-h2 {{ font-size: 1.25rem; font-weight: 700; color: {TEXT}; margin: 0 0 .15rem 0; }}
 .pft-muted {{ color: {MUTED}; font-size: .95rem; margin: 0; }}
 .pft-findings {{ margin: 0; padding-left: 1.1rem; }}
@@ -60,6 +75,12 @@ div.stVerticalBlock[class*="st-key-card"] {{
 .pft-kv dd {{ margin: 0; color: {TEXT}; }}
 .pft-num {{ text-align: right; }}
 hr {{ margin: 1rem 0; border-color: {BORDER}; }}
+/* Medium widths: KPI cards as a 2x2 grid; chart and findings stack instead of squeezing. */
+@media (min-width: 641px) and (max-width: 1199px) {{
+  .st-key-kpis [data-testid="stColumn"] {{ flex: 1 1 calc(50% - .5rem); min-width: calc(50% - .5rem); }}
+  .st-key-ov_row > * > [data-testid="stHorizontalBlock"] {{ flex-wrap: wrap; row-gap: 1rem; }}
+  .st-key-ov_row > * > [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] {{ flex: 1 1 100%; min-width: 100%; }}
+}}
 @media (max-width: 640px) {{
   .block-container {{ padding-left: 1rem; padding-right: 1rem; padding-top: 1.25rem; }}
   .pft-title {{ font-size: 1.35rem; }}
@@ -117,3 +138,17 @@ def cents_to_dollars(df: pd.DataFrame, columns: list[str]) -> pd.DataFrame:
     for c in columns:
         df[c] = df[c].map(lambda v: None if pd.isna(v) else int(v) / 100)
     return df
+
+
+def reset_filters() -> None:
+    """Button callback: restore the defaults that app.py stores in session state."""
+    programs, months = st.session_state["filter_defaults"]
+    st.session_state["f_programs"] = list(programs)
+    st.session_state["f_months"] = tuple(months)
+
+
+def empty_state(message: str, key: str = "empty_reset") -> None:
+    """Explain why nothing is shown and offer the fix in place (the sidebar is collapsed on phones)."""
+    st.info(message + " Adjust the filters, or reset them to show all programs and months.",
+            icon=":material/filter_alt_off:")
+    st.button("Reset filters", on_click=reset_filters, icon=":material/restart_alt:", key=key)

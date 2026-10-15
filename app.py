@@ -30,9 +30,7 @@ months = all_months(frames)
 
 
 # ---------------------------------------------------------------- filters
-def _reset_filters() -> None:
-    st.session_state["f_programs"] = list(programs["program_id"])
-    st.session_state["f_months"] = (months[0], months[-1])
+st.session_state["filter_defaults"] = (list(programs["program_id"]), (months[0], months[-1]))
 
 
 nav = st.navigation([
@@ -55,7 +53,7 @@ with st.sidebar:
     start, end = st.select_slider(
         "Months", options=months, value=(months[0], months[-1]), format_func=month_name, key="f_months",
         help="Inclusive month range. Applies to every page and to the Excel download.")
-    st.button("Reset filters", on_click=_reset_filters, icon=":material/restart_alt:", width="stretch")
+    st.button("Reset filters", on_click=ui.reset_filters, icon=":material/restart_alt:", width="stretch")
     st.caption("Synthetic data for demonstration. Fictional programs, vendors and amounts.")
 
 selected = tuple(p for p in programs["program_id"] if p in picked_programs)
@@ -65,7 +63,7 @@ ctx = pages.Ctx(conn=conn, frames=frames, report=report, names=names, colors=col
 
 
 # ---------------------------------------------------------------- header
-head, action = st.columns([3, 1], vertical_alignment="center")
+head, action = st.columns([2, 1], vertical_alignment="center")
 with head:
     st.html(
         '<div><p class="pft-title">Program Finance Tracker '
@@ -85,7 +83,6 @@ with action:
     )
 
 if not scope.program_ids:
-    st.info("No programs selected. Choose at least one program in the sidebar, or use Reset filters.",
-            icon=":material/filter_alt_off:")
+    ui.empty_state("No programs selected.")
 else:
     nav.run()

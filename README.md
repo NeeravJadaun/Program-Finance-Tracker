@@ -122,4 +122,23 @@ docs/process-diagram.svg   process diagram (plain SVG, importable into Visio)
 - ESG indicators are two synthetic operational measures. They are not impact metrics, not audited, and not mapped to any reporting framework.
 - Overdue controls are judged against a fixed reporting date (2026-09-30) to match the synthetic period.
 - The Power Query script has not been run in Excel or Power BI in this repository.
-- The interface is light-theme only. It was checked at desktop width (1440px) and phone width (375px) in Chromium.
+- The interface is light-theme only. It was checked at 375, 768, 1024 and 1440px in Chromium. It has not been tested with a screen reader.
+
+## Design review
+
+The visual pass used the [ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
+skill's search tool. It recommended a "Minimalism & Swiss" style for a dense finance dashboard,
+which matches the existing design.
+
+Changes made from its guidance:
+- **Focus states:** a solid teal focus outline (about 5.4:1 against white) replaces Streamlit's faint default ring.
+- **Captions:** solid muted text instead of 60% opacity, to keep contrast above 4.5:1.
+- **Badges:** status badges no longer wrap onto a second line.
+- **Reduced motion:** the `prefers-reduced-motion` setting is respected.
+- **Chart table:** the chart has a table view of the same figures, its accessible fallback.
+- **Empty states:** they offer a Reset filters button in place, since the sidebar is collapsed on phones.
+- **Medium widths:** at 641 to 1199px the KPI cards form a 2×2 grid and the findings move below the chart.
+
+Not adopted: its dark palette, Lexend headings and landing-page layout. They conflict with this
+project's light-only, Source Sans 3 brief. Its waterfall-chart suggestion for budget variance was
+also left out, to keep to a single comparison chart.
