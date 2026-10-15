@@ -1,0 +1,15 @@
+txn_id,txn_date,program_id,vendor_id,po_id,amount_cad,category,description
+TXN-0001,2026-04-03,P02,V06,PO-1006,25448.00,Catering,Catering - 2026-04
+TXN-0002,2026-04-03,P04,V10,PO-1010,22910.77,Evaluation,Evaluation - 2026-04
+TXN-0003,2026-04-05,P04,V12,PO-1012,18500.29,Equipment,Equipment - 2026-04
+TXN-0004,2026-04-08,P01,V02,PO-1002,15843.10,Facilitation,Facilitation - 2026-04
+TXN-0005,2026-04-09,P02,V04,PO-1004,30183.46,Logistics,Logistics - 2026-04
+TXN-0006,2026-04-10,P04,V12,PO-1012,11965.38,Equipment,Equipment - 2026-04
+TXN-0007,2026-04-18,P01,V03,PO-1003,18530.71,Venue hire,Venue hire - 2026-04
+TXN-0008,2026-04-20,P01,V02,PO-1002,22921.98,Facilitation,Facilitation - 2026-04
+TXN-0009,2026-04-20,P02,V05,PO-1005,25950.22,Field services,Field services - 2026-04
+TXN-0010,2026-04-21,P02,V04,PO-1004,24083.01,Logistics,Logistics - 2026-04
+TXN-0011,2026-04-22,P03,V07,PO-1007,4850.00,Printing,Launch materials printed ahead of program start
+TXN-0012,2026-04-23,P01,V03,PO-1003,20533.06,Venue hire,Venue hire - 2026-04
+TXN-9001,2026-09-31,P01,V01,PO-1001,1250.00,Training delivery,Invalid date example
+TXN-9002,2026-09-15,,V02,PO-1002,n/a,Facilitation,Missing program and non-numeric amount example

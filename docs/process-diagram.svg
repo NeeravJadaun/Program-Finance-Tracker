@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Monthly finance review process. Plain SVG shapes and text only (no CSS or
+     embedded HTML), so it can be imported into Visio or other diagram tools.
+     This is an SVG file, not a native Visio (.vsdx) diagram. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="330" viewBox="0 0 980 330"
+     font-family="'Segoe UI', 'Source Sans 3', Arial, sans-serif">
+  <title>Monthly finance review process</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="980" height="330" fill="#FFFFFF"/>
+
+  <!-- Step 1 -->
+  <rect x="20" y="50" width="150" height="72" rx="10" fill="#F8FAFC" stroke="#0F766E" stroke-width="1.5"/>
+  <text x="95" y="80" text-anchor="middle" font-size="14" font-weight="700" fill="#171717">1. Refresh data</text>
+  <text x="95" y="100" text-anchor="middle" font-size="12" fill="#475569">Reseed or load month</text>
+
+  <!-- Step 2 -->
+  <rect x="210" y="50" width="150" height="72" rx="10" fill="#F8FAFC" stroke="#0F766E" stroke-width="1.5"/>
+  <text x="285" y="80" text-anchor="middle" font-size="14" font-weight="700" fill="#171717">2. Variance review</text>
+  <text x="285" y="100" text-anchor="middle" font-size="12" fill="#475569">Explain lines over 5%</text>
+
+  <!-- Step 3 -->
+  <rect x="400" y="50" width="150" height="72" rx="10" fill="#F8FAFC" stroke="#0F766E" stroke-width="1.5"/>
+  <text x="475" y="80" text-anchor="middle" font-size="14" font-weight="700" fill="#171717">3. Receipt matching</text>
+  <text x="475" y="100" text-anchor="middle" font-size="12" fill="#475569">Expense to PO and receipts</text>
+
+  <!-- Decision -->
+  <polygon points="590,86 665,38 740,86 665,134" fill="#FFFFFF" stroke="#B45309" stroke-width="1.5"/>
+  <text x="665" y="82" text-anchor="middle" font-size="13" font-weight="700" fill="#171717">Exceptions</text>
+  <text x="665" y="98" text-anchor="middle" font-size="13" font-weight="700" fill="#171717">found?</text>
+
+  <!-- Step 5 -->
+  <rect x="800" y="50" width="160" height="72" rx="10" fill="#F8FAFC" stroke="#0F766E" stroke-width="1.5"/>
+  <text x="880" y="74" text-anchor="middle" font-size="14" font-weight="700" fill="#171717">5. Update evidence</text>
+  <text x="880" y="94" text-anchor="middle" font-size="12" fill="#475569">Control status and notes,</text>
+  <text x="880" y="110" text-anchor="middle" font-size="12" fill="#475569">export workbook, sign off</text>
+
+  <!-- Step 4 -->
+  <rect x="560" y="186" width="210" height="88" rx="10" fill="#FFFBEB" stroke="#B45309" stroke-width="1.5"/>
+  <text x="665" y="210" text-anchor="middle" font-size="14" font-weight="700" fill="#171717">4. Classify and escalate</text>
+  <text x="665" y="230" text-anchor="middle" font-size="12" fill="#475569">Missing support: request receipt</text>
+  <text x="665" y="246" text-anchor="middle" font-size="12" fill="#475569">Error or breach: Finance Lead</text>
+  <text x="665" y="262" text-anchor="middle" font-size="12" fill="#475569">Record status in the app</text>
+
+  <!-- Connectors -->
+  <line x1="170" y1="86" x2="208" y2="86" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="360" y1="86" x2="398" y2="86" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="550" y1="86" x2="588" y2="86" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="740" y1="86" x2="798" y2="86" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="769" y="78" text-anchor="middle" font-size="12" fill="#475569">No</text>
+  <line x1="665" y1="134" x2="665" y2="184" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="676" y="164" font-size="12" fill="#475569">Yes</text>
+  <polyline points="770,230 880,230 880,124" fill="none" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="826" y="222" text-anchor="middle" font-size="12" fill="#475569">Reviewed</text>
+
+  <text x="20" y="312" font-size="11" fill="#475569">Demo procedure for synthetic data. Finance Officer runs steps 1 to 4; Finance Lead handles escalations and sign-off.</text>
+</svg>
